@@ -1,0 +1,3 @@
+[submodule "rotations"]
+	path = rotations
+	url = git@github.com:duncandc/rotations.git
