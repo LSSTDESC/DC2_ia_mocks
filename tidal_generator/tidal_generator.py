@@ -115,7 +115,7 @@ def main(argv):
   tidal_tensors = []
   for i in range(3):
     tidal_tensors.append(np.stack([rhok.apply(tidal_transfer(j, i)).c2r().readout(gal_pos) for j in range(3)], axis=-1))
-  tidal_tensors = np.stack(tensor, axis=-1)
+  tidal_tensors = np.stack(tidal_tensors, axis=-1)
 
   # At this point, tidal_tensor in each rank contains the tensor for the local
   # galaxies
