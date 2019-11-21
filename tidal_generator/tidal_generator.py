@@ -110,7 +110,7 @@ def main(argv):
   density = rhok.c2r().readout(gal_pos)
   density = layout_gal.gather(density, mode='all')
   if rank == 0:
-    fits.writeto(FLAGS.output_dir+'/density_247.fits', density)
+    fits.writeto(FLAGS.output_dir+'/density_247.fits', density, overwrite=True)
 
   tidal_tensors = []
   for i in range(3):
@@ -127,8 +127,8 @@ def main(argv):
   vects = layout_gal.gather(vects, mode='all')
 
   if rank == 0:
-    fits.writeto(FLAGS.output_dir+'/tidal_val_247.fits', vals)
-    fits.writeto(FLAGS.output_dir+'/tidal_vects_247.fits', vects)
+    fits.writeto(FLAGS.output_dir+'/tidal_val_247.fits', vals, overwrite=True)
+    fits.writeto(FLAGS.output_dir+'/tidal_vects_247.fits', vects, overwrite=True)
 
 
 if __name__ == "__main__":
