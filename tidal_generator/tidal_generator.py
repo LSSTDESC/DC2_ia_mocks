@@ -22,7 +22,7 @@ flags.DEFINE_string("output_dir",
                     "/global/cscratch1/sd/flanusse",
                     "Output directory to save the  tidal field information.")
 
-flags.DEFINE_integer("mesh_size", 4096,
+flags.DEFINE_integer("mesh_size", 2048,
                      "Size of the mesh on which the tidal field is computed.")
 
 flags.DEFINE_float("smoothing_scale", 1.0,
