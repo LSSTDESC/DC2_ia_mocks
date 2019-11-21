@@ -73,9 +73,9 @@ def main(argv):
   # Block size for reading the data
   block_size = metadata['num_ranks'] // comm.Get_size()
   pos = gio.read_columns(["x", "y", "z"],
-                         as_numpy_array=True,
+                         #as_numpy_array=True,
                          ranks=list(range(rank, metadata['num_ranks'], nranks)))
-  pos = np.asarray([list(sublist) for sublist in pos])
+  pos = pos.to_numpy() #.view(dtype='float').reshape((-1, 3))
 
   # Create domain decomposition for the particles that matches the mesh
   # decomposition
