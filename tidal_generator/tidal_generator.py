@@ -106,14 +106,19 @@ def main(argv):
   layout_gal = pm.decompose(gal_pos)
   gal_pos = layout_gal.exchange(gal_pos)
 
+  # Retrieve local density on each galaxy
+  density = rhok.c2r().readout(gal_pos)
+  density = layout_gal.gather(density, mode='all')
+  if rank == 0:
+    fits.writeto(FLAGS.output_dir+'/density_247.fits', density)
+
   tidal_tensors = []
   for i in range(3):
-    tensor = np.stack([rhok.apply(tidal_transfer(j, i)).c2r().readout(gal_pos) for j in range(3)], axis=-1)
+    tidal_tensors.append(np.stack([rhok.apply(tidal_transfer(j, i)).c2r().readout(gal_pos) for j in range(3)], axis=-1))
   tidal_tensors = np.stack(tensor, axis=-1)
 
   # At this point, tidal_tensor in each rank contains the tensor for the local
   # galaxies
-
   # Now computing diagonalization
   vals, vects = np.linalg.eigh(tidal_tensors)
 
