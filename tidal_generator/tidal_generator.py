@@ -37,25 +37,25 @@ def lowpass_transfer(r):
   """
   Filter for smoothing the field
   """
-    def filter(k, v):
-        k2 = sum(ki ** 2 for ki in k)
-        return np.exp(-0.5 * k2 * r**2) * v
-    return filter
+  def filter(k, v):
+    k2 = sum(ki ** 2 for ki in k)
+    return np.exp(-0.5 * k2 * r**2) * v
+  return filter
 
 def tidal_transfer(d1, d2):
   """
   Filter to compute the tidal tensor
   """
-    def filter(k, v):
-        k2 = sum(ki ** 2 for ki in k)
-        k2[k2 == 0] = 1.0
-        C1 = (v.BoxSize / v.Nmesh)[d1]
-        w1 = k[d1] * C1
+  def filter(k, v):
+    k2 = sum(ki ** 2 for ki in k)
+    k2[k2 == 0] = 1.0
+    C1 = (v.BoxSize / v.Nmesh)[d1]
+    w1 = k[d1] * C1
 
-        C2 = (v.BoxSize / v.Nmesh)[d2]
-        w2 = k[d2] * C2
-        return w1 * w2 / k2 * v
-    return filter
+    C2 = (v.BoxSize / v.Nmesh)[d2]
+    w2 = k[d2] * C2
+    return w1 * w2 / k2 * v
+  return filter
 
 def main(argv):
 
