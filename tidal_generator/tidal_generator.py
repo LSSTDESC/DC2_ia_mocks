@@ -100,7 +100,7 @@ def main(argv):
   if rank==0:
     gal_pos = fits.getdata(FLAGS.galaxy_positions)
   else:
-    gal_pos = np.array([[],[],[]]).reshape([:,3])
+    gal_pos = np.array([[],[],[]]).reshape([-1,3])
 
   # Computing the distribution of galaxies in the cube
   layout_gal = pm.decompose(gal_pos)
