@@ -19,7 +19,7 @@ flags.DEFINE_string("galaxy_positions",
                     "Path to galaxy positions")
 
 flags.DEFINE_string("output_dir",
-                    "/global/cscratch1/sd/flanusse",
+                    "/global/cscratch1/sd/flanusse/tidal_dc2/",
                     "Output directory to save the  tidal field information.")
 
 flags.DEFINE_integer("mesh_size", 4096,
@@ -73,9 +73,9 @@ def main(argv):
   # Block size for reading the data
   block_size = metadata['num_ranks'] // comm.Get_size()
   pos = gio.read_columns(["x", "y", "z"],
-                         as_numpy_array=True,
+                         #as_numpy_array=True,
                          ranks=list(range(rank, metadata['num_ranks'], nranks)))
-  pos = np.asarray([list(sublist) for sublist in pos])
+  pos = pos.to_numpy() #.view(dtype='float').reshape((-1, 3))
 
   # Create domain decomposition for the particles that matches the mesh
   # decomposition
@@ -108,7 +108,7 @@ def main(argv):
 
   # Retrieve local density on each galaxy
   density = rhok.c2r().readout(gal_pos)
-  density = layout_gal.gather(density, mode='all')
+  density = layout_gal.gather(density, mode='mean')
   if rank == 0:
     fits.writeto(FLAGS.output_dir+'/density_247.fits', density, overwrite=True)
 
@@ -123,8 +123,8 @@ def main(argv):
   vals, vects = np.linalg.eigh(tidal_tensors)
 
   # Retrieving the computed values
-  vals = layout_gal.gather(vals, mode='all')
-  vects = layout_gal.gather(vects, mode='all')
+  vals = layout_gal.gather(vals, mode='mean')
+  vects = layout_gal.gather(vects, mode='mean')
 
   if rank == 0:
     fits.writeto(FLAGS.output_dir+'/tidal_val_247.fits', vals, overwrite=True)
@@ -132,4 +132,5 @@ def main(argv):
 
 
 if __name__ == "__main__":
+  print("let'sgo")
   app.run(main)

@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import numpy as np
 from astropy.utils.misc import NumpyRNGContext
-from rotations import rotate_vector_collection
+
 from rotations.mcrotations import random_perpendicular_directions, random_unit_vectors_3d
 from rotations.vector_utilities import (elementwise_dot, elementwise_norm, normalized_vectors,
                                         angles_between_list_of_vectors)
