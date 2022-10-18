@@ -1,6 +1,6 @@
 [submodule "rotations"]
 	path = rotations
-	url = git@github.com:duncandc/rotations.git
+	url = https://github.com/duncandc/rotations.git
 [submodule "tidal_generator/genericio"]
 	path = tidal_generator/genericio
 	url = https://github.com/Christopher-Bradshaw/genericio.git
